@@ -1,0 +1,13 @@
+# Extensions that shouldn't be committed
+*.db
+*.zip
+*.spec
+*.pyc
+
+# Folders that shouldn't be committed
+.idea/*
+build/*
+dist/*
+*__pycache__/*
+*.csv
+*.lock
