@@ -2,7 +2,6 @@
 Documentation    Biblioteca responsável por toda navegação do menu lateral
 Resource    ${ROOT}/Resources/main.resource
 
-Library    String
 
 *** Keywords ***
 Fechar Navegador
@@ -28,24 +27,47 @@ Abrir Navegador
 
 
 Aguardar Pagina Carregar
+    Wait Until Element Is Visible    ${navegacao.btn_cookie}
     Click Element    ${navegacao.btn_cookie}
-    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${navegacao.header}
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${navegacao.header}    timeout=2
 
     [Return]    ${status}
 
 
-Clicar Nos Links
-
+Efetuar O Download Dos Dados Abertos
     FOR    ${index}    IN RANGE    1    99
         ${link_download}    Format String    ${navegacao.link_download}    index=${index}
 
         Log    Iniciando o loop de clicks no elemento ${link_download}
         
-#        ${status}    Run Keyword And Return Status    Click Element    ${link_download}
         ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${link_download}    timeout= 3
         Run Keyword If    ${status}    Scroll Element Into View    ${link_download}
-
         Run Keyword If    ${status}    Click Element    ${link_download}
+        ${file_name}    Get Text    ${link_download}
+        Set Selenium Speed    200
+        Aguardar Download Ser Concluido    ${file_name}
 
         Exit For Loop If    ${status} == ${False}
     END
+
+
+Aguardar Download Ser Concluido
+    [Documentation]    Verifies that the directory has only one folder and it is not a temp file.
+    [Arguments]    ${file_name}
+
+    ${files}    List Files In Directory    ${DOWNLOAD_DIRECTORY}
+
+    Log    ${files}
+    FOR    ${file}    IN    @{files}
+        ${status}    Evaluate    '${file}'.endswith("load") or '${file}'.endswith("tmp")
+
+        IF    ${status}
+            Log    Esperando Download ser Concluído: ${file_name}    console=True
+            ${tmp_file}    Join Path    ${DOWNLOAD_DIRECTORY}    ${file}
+            Wait Until Removed    ${tmp_file}    timeout=10 minute
+        END
+        
+    END
+
+    # Log    File was successfully downloaded to ${file}
+    # [Return]    ${file}

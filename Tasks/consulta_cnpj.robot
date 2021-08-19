@@ -8,18 +8,19 @@ Abrir Browser
     [Documentation]    Task que abre o browser e retorna seu status
     ${status}    Run Keyword And Return Status    Abrir Navegador    ${URL}    ${DOWNLOAD_DIRECTORY}
     IF    ${status}
-        Set Next Task    Carregar Pagina
+        Set Next Task    Efetuar O Download Dos Dados
 
     ELSE
         Set Next Task    Finaliza Processo
     END
 
-Carregar Pagina
+Efetuar O Download Dos Dados
 
     ${status}    Aguardar Pagina Carregar
     IF    ${status}
-        Log    Deu boa!!    console=True
-        Clicar Nos Links
+        Efetuar O Download Dos Dados Abertos
+        # Click Element    xpath://a[contains(., "Dados Abertos CNPJ EMPRESA 01")]
+
         Set Next Task    Finaliza Processo
     ELSE
         Set Next Task    Finaliza Processo
@@ -29,5 +30,7 @@ Carregar Pagina
     
 Finaliza Processo
     [Documentation]    Task de finalização do robô
+
+    #TODO limpar Pasta de Downloads
     Log    Finalizando Processo!    level=INFO
     Fechar Navegador
