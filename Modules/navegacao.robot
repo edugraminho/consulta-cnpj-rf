@@ -27,7 +27,7 @@ Abrir Navegador
 
 
 Aguardar Pagina Carregar
-    Wait Until Element Is Visible    ${navegacao.btn_cookie}
+    Wait Until Element Is Visible    ${navegacao.btn_cookie}    timeout=2
     Click Element    ${navegacao.btn_cookie}
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${navegacao.header}    timeout=2
 

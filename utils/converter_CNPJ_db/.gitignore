@@ -1,9 +1,0 @@
-# Extensions that shouldn't be committed
-
-
-# Folders that shouldn't be committed
-../data/*
-output/*
-__pycache__/*
-
-venv
