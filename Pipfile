@@ -14,7 +14,7 @@ robotframework-seleniumlibrary = "*"
 selenium = "*"
 hvac = "*"
 rpaframework = "*"
-mongoengine = "==0.22.1"
+mongoengine = "*"
 pandas = "*"
 xlsxwriter = "*"
 

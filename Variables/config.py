@@ -2,7 +2,7 @@ from pathlib import Path, PurePath
 import os
 from datetime import datetime
 
-AREA_NAME = 'consulta_cnpj_rf'
+AREA_NAME = 'consulta-cnpj-rf'
 
 
 # ==================== CHROME ==========================
@@ -22,17 +22,19 @@ DEFAULT_DOWNLOAD_TIMEOUT = '60 seconds'
 # ====================== DIRETÓRIOS LOCAIS ======================
 ROOT = Path(os.path.dirname(os.path.abspath(__file__))).parent
 NOW = datetime.now().strftime("%d%m%Y%H%M")
-DOWNLOAD_DIRECTORY = os.path.join(ROOT, "Downloads")
+
+# DOWNLOAD_DIRECTORY = os.path.join(ROOT, "Downloads")
+DOWNLOAD_DIRECTORY = "D:\\Downloads"
+
 # ===============================================================
 
 
 # ====================== Mongo ======================
-MONGO_ADDR = "localhost",
-MONGO_COMMONS_DB = "commons",
-MONGO_PORT = "27017",
-MONGO_PWD = "admin",
-MONGO_URI = "mongodb://localhost:27017/?authSource=admin",
-MONGO_USER = "root",
+MONGO_ADDR = "localhost"
+MONGO_PORT = "27017"
+MONGO_PWD = "admin"
+MONGO_URI = "mongodb://localhost:27017/?authSource=admin"
+MONGO_USER = "root"
 MONGO_USER_CONFIG_COLLECTION = "user-configurations"
 # ===================================================
 

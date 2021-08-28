@@ -27,3 +27,9 @@ This README would normally document whatever steps are necessary to get your app
 
 * Repo owner or admin
 * Other community or team contact
+
+
+
+
+- procurar por cnpj basico - 8 primeiros, NOME FANTASIA, CNAE FISCAL PRINCIPAL, estados e cidades, NOME DO SÓCIO, CNPJ/CPF DO SÓCIO 
+    > melhoria - CAPITAL SOCIAL DA EMPRESA
