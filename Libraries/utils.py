@@ -3,10 +3,8 @@ import csv
 from zipfile import ZipFile
 from robot.api import logger
 
-from Database.queries import InsertItems
+from Database.queries import *
 from Variables.config import *
-
-
 
 def extrair_csv_do_arquivo_zip():
     try:
@@ -22,44 +20,68 @@ def extrair_csv_do_arquivo_zip():
         logger.error(f'Erro ao extrair Csv: {e}')
         return False
 
-def convert_to_csv():
+def convert_to_csv(name):
 
+    file_name = name.replace(" ", "_").lower()
     for file in os.listdir(DOWNLOAD_DIRECTORY):
         path_file = os.path.join(DOWNLOAD_DIRECTORY, file)
 
-        if file.endswith('.EMPRECSV') or file.endswith('.SOCIOCSV') or file.endswith('.ESTABELE')or file.endswith('.CNAECSV'):
-            base = os.path.splitext(file)[0]
+        if file.endswith('.EMPRECSV'):
+            # base = os.path.splitext(file)[0]+".csv"
+            # logger.info(f'************************{base}*****', also_console=True)
+
+            # # path_base = os.path.join(DOWNLOAD_DIRECTORY, base)
+            # if file in os.listdir(DOWNLOAD_DIRECTORY):
+            #     logger.info(f'Este arquivo já existe', also_console=True)
+            # else:
+            logger.info(f'Arquivo descompactado com Sucesso', also_console=True)
+            os.rename(path_file, os.path.join(DOWNLOAD_DIRECTORY, f"empresas_{file_name}_{NOW}.csv"))
+
+
+        elif file.endswith('.SOCIOCSV'):
+            # base = os.path.splitext(file)[0]+".csv"
             # path_base = os.path.join(DOWNLOAD_DIRECTORY, base)
-            if base+".csv" in os.listdir(DOWNLOAD_DIRECTORY):
-                logger.info(f'Este arquivo já existe', also_console=True)
+            # if file in os.listdir(DOWNLOAD_DIRECTORY):
+            #     logger.info(f'Este arquivo já existe', also_console=True)
+            # else:
+            logger.info(f'Arquivo descompactado com Sucesso', also_console=True)
+            os.rename(path_file, os.path.join(DOWNLOAD_DIRECTORY, f"socios_{file_name}_{NOW}.csv"))   
+
+
+
+        elif file.endswith('.ESTABELE'):
+            # base = os.path.splitext(file)[0]+".csv"
+            # path_base = os.path.join(DOWNLOAD_DIRECTORY, base)
+            # if file in os.listdir(DOWNLOAD_DIRECTORY):
+            #     logger.info(f'Este arquivo já existe', also_console=True)
+            # else:
+            logger.info(f'Arquivo descompactado com Sucesso', also_console=True)
+            os.rename(path_file, os.path.join(DOWNLOAD_DIRECTORY, f"eslabelecimentos_{file_name}_{NOW}.csv"))
                 
-            else:
-                logger.info(f'Arquivo descompactado com Sucesso', also_console=True)
-                os.rename(path_file, path_file+".csv")
-                
 
 
-def ler_csv():
-
-    convert_to_csv()
+def inserir_dados_no_bd():
     
     for csv_file in os.listdir(DOWNLOAD_DIRECTORY):
 
         if csv_file.endswith('.csv'):
             try:
                 with open(os.path.join(DOWNLOAD_DIRECTORY, csv_file), "r", newline='') as csv_f:
+                    logger.info(f'Iniciando a Leitura e Insercao no BD do Arquivo: {csv_file}', also_console=True)
+
                     reader = csv.reader(csv_f, delimiter=';')
-                    return reader
+                    base = os.path.splitext(csv_file)[0].split("_")
+
+                    if base[0] == "empresas":
+                        inserir_empresas(reader)
+                    if base[0] == "socios":
+                        inserir_socios(reader)                    
+                    if base[0] == "eslabelecimentos":
+                        inserir_estabelecimentos(reader)
+
             except Exception as e:
                 logger.error(f'Erro ao ler o Csv: {e}')
                 return False
 
         
-
-def inserir_dados_no_bd(reader):
-    
-
-    InsertItems.insert_csv_into_db(reader)
-
-
 

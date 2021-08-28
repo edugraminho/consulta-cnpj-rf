@@ -8,13 +8,10 @@ Abrir Browser
     [Documentation]    Task que abre o browser e retorna seu status
     Open Connections
 
-    ${status}    extrair_csv_do_arquivo_zip
+    # ${status}    extrair_csv_do_arquivo_zip
+    # convert_to_csv    Dados Abertos CNPJ EMPRESA 01
+    inserir_dados_no_bd
 
-    ${reader}    Ler Csv
-    IF    ${reader}
-        Log    ********LEU********
-        # inserir_dados_no_bd    ${reader}
-    END
 
     # IF    ${status}
         

@@ -21,10 +21,10 @@ DEFAULT_DOWNLOAD_TIMEOUT = '60 seconds'
 
 # ====================== DIRETÓRIOS LOCAIS ======================
 ROOT = Path(os.path.dirname(os.path.abspath(__file__))).parent
-NOW = datetime.now().strftime("%d%m%Y%H%M")
+NOW = datetime.now().strftime("%d%m%Y")
 
-# DOWNLOAD_DIRECTORY = os.path.join(ROOT, "Downloads")
-DOWNLOAD_DIRECTORY = "D:\\Downloads"
+DOWNLOAD_DIRECTORY = os.path.join(ROOT, "Downloads")
+# DOWNLOAD_DIRECTORY = "D:\\Downloads"
 
 # ===============================================================
 
